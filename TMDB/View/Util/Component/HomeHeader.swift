@@ -62,6 +62,8 @@ struct HomeHeader: View {
     private var searchButton: some View {
         NavigationLink(destination: self.searchDestination) {
             Image(systemName: "magnifyingglass")
+                .resizable()
+                .frame(width: 16, height: 16)
                 .foregroundColor(.tWhite)
         }
     }

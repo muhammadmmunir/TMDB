@@ -43,6 +43,8 @@ struct MovieDetailView: View {
             SearchView()
         }) {
             Image(systemName: "magnifyingglass")
+                .resizable()
+                .frame(width: 16, height: 16)
                 .foregroundColor(.tWhite)
         }
     }

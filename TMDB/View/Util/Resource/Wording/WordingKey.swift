@@ -14,6 +14,7 @@ enum WordingKey: String {
     case generalTmdb = "general.tmdb"
     case generalSearch = "general.search"
     case generalPopular = "general.popular"
+    case generalDiscover = "general.discover"
     case generalMovies = "general.movies"
     case generalTVShows = "general.tvshows"
     case generalHome = "general.home"

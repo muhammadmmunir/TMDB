@@ -85,7 +85,7 @@ struct HomeView: View {
                     Movie(id: 5, title: "One Piece 5", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1312156301783.jpg")
                 ]
             ),
-            sectionTitle: Wording().str(.generalTVShows))
+            sectionTitle: Wording().str(.generalDiscover))
     }
     
     private var tvShows: some View {
@@ -125,7 +125,7 @@ struct HomeView: View {
                     Movie(id: 6, title: "The Dark Knight 2", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg")
                 ]
             ),
-            sectionTitle: Wording().str(.generalTVShows))
+            sectionTitle: Wording().str(.generalDiscover))
     }
 }
 

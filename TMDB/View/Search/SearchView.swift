@@ -24,45 +24,38 @@ struct SearchView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ZStack(alignment: .topLeading) {
-                Color(.black)
-                    .edgesIgnoringSafeArea(.all)
+        ZStack(alignment: .topLeading) {
+            VStack(alignment: .center, spacing: 16) {
+                SearchBar(text: self.$viewModel.searchText)
+                    .frame(height: 60)
                 
-                VStack(alignment: .center, spacing: 16) {
-                    SearchBar(text: self.$viewModel.searchText)
-                        .frame(height: 60)
-                    
-                    if self.viewModel.state == .loading {
-                        self.loadingView
-                    } else {
-                        if !self.viewModel.items.isEmpty {
-                            ScrollView(.vertical, showsIndicators: true) {
-                                VStack(alignment: .leading, spacing: 10) {
-                                    ForEach(0..<self.viewModel.items.count, id: \.self) { index in
-                                        HStack(alignment: .center, spacing: 10) {
-                                            ForEach(self.viewModel.items[index], id: \.id) { movie in
-                                                self.cellLink(using: movie)
-                                            }
-                                        }.frame(maxWidth: .infinity)
-                                    }
+                if self.viewModel.state == .loading {
+                    self.loadingView
+                } else {
+                    if !self.viewModel.items.isEmpty {
+                        ScrollView(.vertical, showsIndicators: true) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                ForEach(0..<self.viewModel.items.count, id: \.self) { index in
+                                    HStack(alignment: .center, spacing: 10) {
+                                        ForEach(self.viewModel.items[index], id: \.id) { movie in
+                                            self.cellLink(using: movie)
+                                        }
+                                    }.frame(maxWidth: .infinity)
                                 }
-                            }.gesture(
-                                DragGesture()
-                                    .onChanged { _ in
-                                        UIApplication.shared.endEditing(true)
-                                    }
-                            )
-                        } else {
-                           EmptyView()
-                        }
+                            }
+                        }.gesture(
+                            DragGesture()
+                                .onChanged { _ in
+                                    UIApplication.shared.endEditing(true)
+                                }
+                        )
+                    } else {
+                        EmptyView()
                     }
                 }
-                .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.5)))
             }
-            .navigationBarHidden(true)
+            .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.5)))
         }
-        .ignoresSafeArea()
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(
             self.wording.str(.generalSearch))
