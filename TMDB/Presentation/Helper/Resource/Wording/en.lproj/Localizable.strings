@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  TMDB
+
+  Created by Muhammad M Munir on 30/07/22.
+  
+*/
+
+"general.tmdb" = "TMDB";
+"general.guest" = "Guest";
+"general.hello" = "Hello";
+"general.welcome" = "Welcome";
+"general.search" = "Search";
+"general.popular" = "Popular";
+"general.movies" = "Movies";
+"general.tvshows" = "TV Shows";
+"general.home" = "Home";
+"general.profile" = "Profile";
+"general.typing" = "Typing...";
+"general.overview" = "Overview";
+"general.releasedate" = "Release Date";
+"general.review" = "Review";
+"general.seeallreview" = "see all review";
+"general.allreview" = "All Reviews";

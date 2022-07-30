@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  TMDB
+
+  Created by Muhammad M Munir on 30/07/22.
+  
+*/
+
+"general.tmdb" = "TMDB";
+"general.guest" = "Tamu";
+"general.hello" = "Halo";
+"general.welcome" = "Selamat Datang";
+"general.search" = "Cari";
+"general.popular" = "Populer";
+"general.movies" = "Film";
+"general.tvshows" = "Acara TV";
+"general.home" = "Beranda";
+"general.profile" = "Profil";
+"general.typing" = "Typing...";
+"general.overview" = "Ikhtisar";
+"general.releasedate" = "Tanggal Rilis";
+"general.review" = "Ulasan";
+"general.seeallreview" = "lihat semua ulasan";
+"general.allreview" = "Semua Ulasan";
