@@ -37,8 +37,12 @@ struct SearchView: View {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(0..<self.viewModel.items.count, id: \.self) { index in
                                     HStack(alignment: .center, spacing: 10) {
-                                        ForEach(self.viewModel.items[index], id: \.id) { movie in
-                                            self.cellLink(using: movie)
+                                        ForEach(0...2, id: \.self) { idx in
+                                            if self.viewModel.items[index].indices.contains(idx) {
+                                                self.cellLink(using: self.viewModel.items[index][idx])
+                                            } else {
+                                                self.emptyCell
+                                            }
                                         }
                                     }.frame(maxWidth: .infinity)
                                 }
@@ -90,8 +94,16 @@ struct SearchView: View {
         }
     }
     
+    private var emptyCell: some View {
+        Rectangle()
+            .fill(.clear)
+            .frame(
+                width: self.cellWidth,
+                height: self.cellHeight)
+    }
+    
     private func cellLink(
-        using movie: Movie
+        using movie: MovieBase
     ) -> some View {
         return NavigationLink {
             MovieDetailView()
@@ -101,16 +113,16 @@ struct SearchView: View {
 
     }
     
-    private func cell(using movie: Movie) -> some View {
+    private func cell(using movie: MovieBase) -> some View {
         return VStack(alignment: .leading) {
             Group {
-                if movie.posterUrl != nil {
+                if movie.posterURL != nil {
                     self.poster(
-                        title: movie.title,
-                        url: movie.posterUrl)
+                        title: movie.getTitle(),
+                        url: movie.posterURL)
                 } else {
                     self.posterPlaceholder(
-                        using: movie.title)
+                        using: movie.getTitle())
                 }
             }
             .frame(
@@ -119,7 +131,7 @@ struct SearchView: View {
             .background(Color.tDarkGray)
             .cornerRadius(8)
             
-            Text(movie.title)
+            Text(movie.getTitle())
                 .font(.tCaption2.bold())
                 .lineLimit(1)
                 .foregroundColor(.tWhite)
@@ -131,7 +143,7 @@ struct SearchView: View {
         title: String,
         url: URL?
     ) -> some View {
-        WebImage(url: url)
+        return WebImage(url: url)
             .resizable()
             .placeholder {
                 self.posterPlaceholder(

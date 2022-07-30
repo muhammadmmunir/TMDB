@@ -16,28 +16,54 @@ class SearchViewModel: ObservableObject {
     }
 
     @Published var searchText = ""
-//    @Published var items = [[Movie]]()
-    @Published var items: [[Movie]] = [
-        [
-            Movie(id: 1, title: "One Piece 1", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 2, title: "Interstellar 1", poster: "https://cdn.europosters.eu/image/750/posters/interstellar-ice-walk-i23290.jpg"),
-            Movie(id: 3, title: "One Piece 3", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg")
-        ],
-        [
-            Movie(id: 4, title: "Interstellar 2", poster: "https://cdn.europosters.eu/image/750/posters/interstellar-ice-walk-i23290.jpg"),
-            Movie(id: 5, title: "The Dark Knight 1", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg"),
-            Movie(id: 6, title: "The Dark Knight 2", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg")
-        ],
-        [
-            Movie(id: 7, title: "One Piece 1", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 8, title: "Interstellar 1", poster: "https://cdn.europosters.eu/image/750/posters/interstellar-ice-walk-i23290.jpg"),
-            Movie(id: 9, title: "One Piece 3", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg")
-        ],
-        [
-            Movie(id: 10, title: "Interstellar 2", poster: "https://cdn.europosters.eu/image/750/posters/interstellar-ice-walk-i23290.jpg"),
-            Movie(id: 11, title: "The Dark Knight 1", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg"),
-            Movie(id: 12, title: "The Dark Knight 2", poster: "")
-        ],
-    ]
+    @Published var items = [[MovieBase]]()
     @Published var state: State = .initial
+    
+    private var searchTask: APIServiceCancellableInterface? {
+        willSet {
+            self.searchTask?.cancel()
+        }
+    }
+    
+    init() {
+        self.fetch()
+    }
+    
+    func mapMoviesPage(_ moviesPage: MoviesPage) -> [[Movie]] {
+        var movies = moviesPage.movies
+        var items = [[Movie]]()
+        
+        while !movies.isEmpty {
+            var itemsInside = [Movie]()
+            for _ in 0...2 where !movies.isEmpty {
+                itemsInside.append(movies.removeFirst())
+            }
+            
+            items.append(itemsInside)
+        }
+        return items
+    }
+    
+    private func fetch() {
+        let request = MoviesRequestDTO(query: "Thor", page: 1)
+        let apiServiceConfig = APIServiceConfig(
+            baseURL: APIConfig.baseURL,
+            headers: [:],
+            queryParams: ["api_key": APIConfig.apiKey])
+        let apiService = APIService(config: apiServiceConfig)
+        let transferService = DataTransferService(apiService: apiService)
+        let service = MovieSearchService(request: request, transferService: transferService)
+        
+        self.state = .loading
+        self.searchTask = service.fetchMoviesList { result in
+            switch result {
+            case .success(let moviesPage):
+                self.items = self.mapMoviesPage(moviesPage)
+                self.state = .data
+            case .failure:
+                self.state = .error
+            }
+            self.searchTask = nil
+        }
+    }
 }

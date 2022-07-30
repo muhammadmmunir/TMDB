@@ -51,25 +51,13 @@ struct HomeView: View {
     }
     
     private var bannerMovies: some View {
-        BannerAutoScrollable(movies: [
-            Movie(id: 1, title: "One Piece 1", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 2, title: "One Piece 2", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 3, title: "One Piece 3", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 4, title: "One Piece 4", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 5, title: "One Piece 5", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1312156301783.jpg")
-        ])
+        BannerAutoScrollable(movies: [])
     }
     
     private var popularMovies: some View {
         HorizontalSectionList(
             viewModel: HorizontalSectionListViewModel(
-                movies: [
-                    Movie(id: 1, title: "One Piece 1", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 2, title: "One Piece 2", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 3, title: "One Piece 3", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 4, title: "One Piece 4", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 5, title: "One Piece 5", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1312156301783.jpg")
-                ]
+                movies: []
             ),
             sectionTitle: Wording().str(.generalPopular))
     }
@@ -77,13 +65,7 @@ struct HomeView: View {
     private var discoverMovies: some View {
         HorizontalSectionList(
             viewModel: HorizontalSectionListViewModel(
-                movies: [
-                    Movie(id: 1, title: "One Piece 1", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 2, title: "One Piece 2", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 3, title: "One Piece 3", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 4, title: "One Piece 4", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                    Movie(id: 5, title: "One Piece 5", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1312156301783.jpg")
-                ]
+                movies: []
             ),
             sectionTitle: Wording().str(.generalDiscover))
     }
@@ -97,21 +79,13 @@ struct HomeView: View {
     }
     
     private var bannerTvShows: some View {
-        BannerAutoScrollable(movies: [
-            Movie(id: 4, title: "Interstellar 2", poster: "https://cdn.europosters.eu/image/750/posters/interstellar-ice-walk-i23290.jpg"),
-            Movie(id: 5, title: "The Dark Knight 1", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg"),
-            Movie(id: 6, title: "The Dark Knight 2", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg")
-        ])
+        BannerAutoScrollable(movies: [])
     }
     
     private var popularTvShows: some View {
         HorizontalSectionList(
             viewModel: HorizontalSectionListViewModel(
-                movies: [
-                    Movie(id: 4, title: "Interstellar 2", poster: "https://cdn.europosters.eu/image/750/posters/interstellar-ice-walk-i23290.jpg"),
-                    Movie(id: 5, title: "The Dark Knight 1", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg"),
-                    Movie(id: 6, title: "The Dark Knight 2", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg")
-                ]
+                movies: []
             ),
             sectionTitle: Wording().str(.generalPopular))
     }
@@ -119,11 +93,7 @@ struct HomeView: View {
     private var discoverTvShows: some View {
         HorizontalSectionList(
             viewModel: HorizontalSectionListViewModel(
-                movies: [
-                    Movie(id: 4, title: "Interstellar 2", poster: "https://cdn.europosters.eu/image/750/posters/interstellar-ice-walk-i23290.jpg"),
-                    Movie(id: 5, title: "The Dark Knight 1", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg"),
-                    Movie(id: 6, title: "The Dark Knight 2", poster: "https://i.pinimg.com/originals/cc/c6/35/ccc63593fe4c0f84bad83ce408a6674b.jpg")
-                ]
+                movies: []
             ),
             sectionTitle: Wording().str(.generalDiscover))
     }

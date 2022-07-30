@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BannerAutoScrollable: View {
-    private let movies: [Movie]
+    private let movies: [MovieBase]
     private let timer = Timer
         .publish(every: 5, on: .main, in: .common)
         .autoconnect()
@@ -20,10 +20,10 @@ struct BannerAutoScrollable: View {
     
     var body: some View {
         TabView(selection: $currentIndex) {
-            ForEach(self.movies) { movie in
+            ForEach(self.movies, id: \.id) { movie in
                 Banner(
-                    url: movie.posterUrl,
-                    title: movie.title)
+                    url: movie.backdropURL,
+                    title: movie.getTitle())
             }
         }
         .frame(height: Banner.height)
@@ -42,12 +42,6 @@ struct BannerAutoScrollable: View {
 
 struct BannerAutoScrollable_Previews: PreviewProvider {
     static var previews: some View {
-        BannerAutoScrollable(movies: [
-            Movie(id: 1, title: "One Piece 1", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 2, title: "One Piece 2", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 3, title: "One Piece 3", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 4, title: "One Piece 4", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            Movie(id: 5, title: "One Piece 5", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1312156301783.jpg")
-        ])
+        BannerAutoScrollable(movies: [])
     }
 }

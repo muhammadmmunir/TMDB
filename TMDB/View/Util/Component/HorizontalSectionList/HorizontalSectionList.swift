@@ -52,10 +52,10 @@ struct HorizontalSectionList: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(self.viewModel.movies) { movie in
+                    ForEach(self.viewModel.movies, id: \.id) { movie in
                         PosterImage(
-                            url: movie.posterUrl,
-                            title: movie.title)
+                            url: movie.posterURL,
+                            title: movie.getTitle())
                     }
                 }
                 .frame(height: PosterImage.height)
@@ -86,13 +86,7 @@ struct HorizontalSectionList_Previews: PreviewProvider {
             
             HorizontalSectionList(
                 viewModel: HorizontalSectionListViewModel(
-                    movies: [
-                        Movie(id: 1, title: "One Piece 1", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                        Movie(id: 2, title: "One Piece 2", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                        Movie(id: 3, title: "One Piece 3", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                        Movie(id: 4, title: "One Piece 4", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-                        Movie(id: 5, title: "One Piece 5", poster: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1312156301783.jpg")
-                    ]
+                    movies: []
                 ),
                 sectionTitle: Wording().str(.generalPopular))
         }.preferredColorScheme(.dark)

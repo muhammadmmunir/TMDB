@@ -7,19 +7,6 @@
 
 import Foundation
 
-struct Movie: Decodable, Identifiable {
-    let id: Int
-    let title: String
-    let poster: String?
-    
-    var posterUrl: URL? {
-        guard let posterPath = self.poster else {
-            return nil
-        }
-        return URL(string: posterPath)
-    }
-}
-
 class HorizontalSectionListViewModel: ObservableObject {
     enum State {
         case initial
@@ -28,10 +15,10 @@ class HorizontalSectionListViewModel: ObservableObject {
         case data
     }
     
-    @Published var movies = [Movie]()
+    @Published var movies = [MovieBase]()
     @Published var state: State = .data
     
-    init(movies: [Movie]) {
+    init(movies: [MovieBase]) {
         self.movies = movies
     }
 }
