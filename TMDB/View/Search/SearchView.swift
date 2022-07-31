@@ -17,8 +17,10 @@ struct SearchView<T>: View where T: SearchViewModelInterface {
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack(alignment: .center, spacing: 16) {
-                SearchBar(wording: .init(), text: $viewModel.searchText)
-                    .frame(height: 60)
+                SearchBar(
+                    placeholder: self.viewModel.searchPlaceholder,
+                    text: $viewModel.searchText)
+                .frame(height: 60)
                 
                 if self.viewModel.state == .loading {
                     self.loadingView

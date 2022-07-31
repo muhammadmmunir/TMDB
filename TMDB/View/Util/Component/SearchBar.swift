@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchBar: View {
-    let wording: Wording
+    let placeholder: String
     @Binding var text: String
 
     var body: some View {
@@ -18,7 +18,7 @@ struct SearchBar: View {
                     .foregroundColor(.tLightGray)
 
                 TextField(
-                    wording.str(.generalSearch),
+                    self.placeholder,
                     text: $text
                 )
                 .foregroundColor(.tLightGray)
@@ -49,6 +49,6 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(wording: Wording(), text: .constant(""))
+        SearchBar(placeholder: "", text: .constant(""))
     }
 }

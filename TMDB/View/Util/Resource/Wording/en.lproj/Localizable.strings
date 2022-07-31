@@ -11,6 +11,8 @@
 "general.hello" = "Hello";
 "general.welcome" = "Welcome";
 "general.search" = "Search";
+"general.search.movie" = "Search Movie...";
+"general.search.tvshow" = "Search TV Show...";
 "general.popular" = "Popular";
 "general.discover" = "Discover";
 "general.movies" = "Movies";

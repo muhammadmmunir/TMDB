@@ -11,6 +11,8 @@
 "general.hello" = "Halo";
 "general.welcome" = "Selamat Datang";
 "general.search" = "Cari";
+"general.search.movie" = "Cari Film...";
+"general.search.tvshow" = "Cari Acara TV...";
 "general.popular" = "Populer";
 "general.discover" = "Discover";
 "general.movies" = "Film";
