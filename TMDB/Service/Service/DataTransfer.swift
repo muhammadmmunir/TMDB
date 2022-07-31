@@ -37,7 +37,7 @@ public class DataTransferService {
     private let errorResolver: DataTransferErrorResolverInterface
     
     public init(
-        apiService: APIServiceInterface,
+        apiService: APIServiceInterface = APIService(),
         errorResolver: DataTransferErrorResolverInterface = DataTransferErrorResolver()
     ) {
         self.apiService = apiService

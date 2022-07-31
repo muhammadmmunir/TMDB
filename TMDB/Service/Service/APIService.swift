@@ -54,7 +54,7 @@ public class APIService {
     private let logger: APIServiceErrorLoggerInterface
     
     public init(
-        config: APIServiceConfigInterface,
+        config: APIServiceConfigInterface = APIServiceConfig.create(),
         sessionManager: APISessionManagerInterface = APISessionManager(),
         logger: APIServiceErrorLoggerInterface = APIServiceErrorLogger()
     ) {

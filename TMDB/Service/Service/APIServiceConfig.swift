@@ -28,3 +28,13 @@ public struct APIServiceConfig: APIServiceConfigInterface {
         self.queryParams = queryParams
     }
 }
+
+public extension APIServiceConfig {
+    static func create() -> APIServiceConfig {
+        APIServiceConfig(
+            baseURL: APIConfig.baseURL,
+            headers: [:],
+            queryParams: ["api_key": APIConfig.apiKey]
+        )
+    }
+}

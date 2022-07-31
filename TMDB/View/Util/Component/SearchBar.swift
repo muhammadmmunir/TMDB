@@ -8,16 +8,8 @@
 import SwiftUI
 
 struct SearchBar: View {
-    private let wording: Wording
+    let wording: Wording
     @Binding var text: String
-    
-    init(
-        wording: Wording = .init(),
-        text: Binding<String> = .constant(Wording().str(.generalTyping))
-    ) {
-        self.wording = wording
-        _text = text
-    }
 
     var body: some View {
         HStack {
@@ -26,7 +18,7 @@ struct SearchBar: View {
                     .foregroundColor(.tLightGray)
 
                 TextField(
-                    wording.str(.generalTyping),
+                    wording.str(.generalSearch),
                     text: $text
                 )
                 .foregroundColor(.tLightGray)
@@ -57,6 +49,6 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar()
+        SearchBar(wording: Wording(), text: .constant(""))
     }
 }

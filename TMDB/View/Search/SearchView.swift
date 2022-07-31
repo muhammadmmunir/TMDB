@@ -8,25 +8,16 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct SearchView: View {
+struct SearchView<T>: View where T: SearchViewModelInterface {
     private let cellWidth: CGFloat = 100
     private let cellHeight: CGFloat = 180
     
-    private let wording: Wording
-    @ObservedObject var viewModel: SearchViewModel
-    
-    init(
-        wording: Wording = .init(),
-        viewModel: SearchViewModel = .init()
-    ) {
-        self.wording = wording
-        self.viewModel = viewModel
-    }
+    @ObservedObject var viewModel: T
     
     var body: some View {
         ZStack(alignment: .topLeading) {
             VStack(alignment: .center, spacing: 16) {
-                SearchBar(text: self.$viewModel.searchText)
+                SearchBar(wording: .init(), text: $viewModel.searchText)
                     .frame(height: 60)
                 
                 if self.viewModel.state == .loading {
@@ -54,15 +45,14 @@ struct SearchView: View {
                                 }
                         )
                     } else {
-                        EmptyView()
+                        Spacer()
                     }
                 }
             }
             .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.5)))
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(
-            self.wording.str(.generalSearch))
+        .navigationTitle("")
     }
     
     private var loadingView: some View {
@@ -167,6 +157,6 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        SearchView(viewModel: SearchViewModel())
     }
 }

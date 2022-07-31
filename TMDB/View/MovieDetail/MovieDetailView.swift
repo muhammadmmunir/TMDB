@@ -40,7 +40,7 @@ struct MovieDetailView: View {
     
     private var searchButton: some View {
         NavigationLink(destination: {
-            SearchView()
+            SearchView(viewModel: SearchViewModel())
         }) {
             Image(systemName: "magnifyingglass")
                 .resizable()

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E69E19E22896290E00162DD6 /* APIServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E19E12896290E00162DD6 /* APIServiceState.swift */; };
+		E69E19E628962C9F00162DD6 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E19E528962C9F00162DD6 /* SearchService.swift */; };
 		E6AD2408289524CB00D5E356 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD2407289524CB00D5E356 /* UserListView.swift */; };
 		E6AD240A28952A3600D5E356 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD240928952A3600D5E356 /* SearchViewModel.swift */; };
 		E6AD240C28952FF100D5E356 /* UIApplication+EndEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AD240B28952FF100D5E356 /* UIApplication+EndEditing.swift */; };
@@ -68,6 +70,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E69E19E12896290E00162DD6 /* APIServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceState.swift; sourceTree = "<group>"; };
+		E69E19E528962C9F00162DD6 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		E6AD2407289524CB00D5E356 /* UserListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
 		E6AD240928952A3600D5E356 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		E6AD240B28952FF100D5E356 /* UIApplication+EndEditing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+EndEditing.swift"; sourceTree = "<group>"; };
@@ -140,6 +144,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E69E19E428962C8500162DD6 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				E6AD240928952A3600D5E356 /* SearchViewModel.swift */,
+				E69E19E528962C9F00162DD6 /* SearchService.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		E6AD2406289524CB00D5E356 /* UserList */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,7 +200,8 @@
 		E6AD241828958E5700D5E356 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				E6AD240928952A3600D5E356 /* SearchViewModel.swift */,
+				E69E19E428962C8500162DD6 /* Search */,
+				E69E19E12896290E00162DD6 /* APIServiceState.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -584,6 +598,7 @@
 				E6AD24322895AD7D00D5E356 /* PrintDebug.swift in Sources */,
 				E6C4413C2893916A00B3E425 /* SearchBar.swift in Sources */,
 				E6AD2408289524CB00D5E356 /* UserListView.swift in Sources */,
+				E69E19E628962C9F00162DD6 /* SearchService.swift in Sources */,
 				E6EEBA8128932035000B4DAE /* WordingKey.swift in Sources */,
 				E6AD244F2895C71100D5E356 /* Review.swift in Sources */,
 				E6C441432893B19900B3E425 /* Fonts.swift in Sources */,
@@ -599,6 +614,7 @@
 				E6EF7766289505DB00EBAF42 /* ProfileView.swift in Sources */,
 				E6AD2414289579F400D5E356 /* AllReviewView.swift in Sources */,
 				E6AD240F2895550800D5E356 /* MovieDetailView.swift in Sources */,
+				E69E19E22896290E00162DD6 /* APIServiceState.swift in Sources */,
 				E6AD243D2895B69A00D5E356 /* TVShowEndpoints.swift in Sources */,
 				E6C44133289380ED00B3E425 /* ActivityIndicator.swift in Sources */,
 			);

@@ -25,7 +25,7 @@ struct HomeView: View {
     private var header: some View {
         VStack {
             HomeHeader(searchDestination: {
-                SearchView()
+                SearchView(viewModel: SearchViewModel())
             }, moviesAction: {
                 self.selectedType = 0
             }, tvShowsAction: {

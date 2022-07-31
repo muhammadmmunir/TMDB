@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeHeader: View {
-    let searchDestination: () -> SearchView
+    let searchDestination: () -> SearchView<SearchViewModel>
     let moviesAction: () -> Void
     let tvShowsAction: () -> Void
     @Binding var selectedType: Int
@@ -17,7 +17,7 @@ struct HomeHeader: View {
     
     init(
         wording: Wording = .init(),
-        searchDestination: @escaping () -> SearchView,
+        searchDestination: @escaping () -> SearchView<SearchViewModel>,
         moviesAction: @escaping () -> Void,
         tvShowsAction: @escaping () -> Void,
         selectedType: Binding<Int>
@@ -95,7 +95,7 @@ struct HomeHeader_Previews: PreviewProvider {
     static var previews: some View {
         HomeHeader(
             searchDestination: {
-                SearchView()
+                SearchView(viewModel: SearchViewModel())
             },
             moviesAction: {},
             tvShowsAction: {},
