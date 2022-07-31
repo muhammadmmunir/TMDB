@@ -9,29 +9,16 @@ import SwiftUI
 
 struct MainView: View {
     @State public var selectedTab: Int = 0
-    private let wording: Wording
-    
-    init(wording: Wording = .init()) {
-        self.wording = wording
-    }
     
     var body: some View {
         NavigationView {
             TabView(selection: $selectedTab) {
-                ZStack {
-                    HomeView()
-                }
-                .tabItem {
-                    Image(systemName: "house")
-                }
+                ZStack { HomeView(viewModel: HomeViewModel()) }
+                .tabItem { Image(systemName: "house") }
                 .tag(0)
                 
-                ZStack {
-                    ProfileView()
-                }
-                .tabItem {
-                    Image(systemName: "person")
-                }
+                ZStack { ProfileView() }
+                .tabItem { Image(systemName: "person") }
                 .tag(1)
             }
             .accentColor(.tRed)

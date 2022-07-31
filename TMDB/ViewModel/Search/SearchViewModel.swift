@@ -40,10 +40,12 @@ final class SearchViewModel: SearchViewModelInterface {
     
     init(
         wording: Wording = .init(),
-        service: SearchServiceInterface = SearchService(transferService: DataTransferService())
+        service: SearchServiceInterface = SearchService(),
+        selectedType: Int = 0
     ) {
         self.wording = wording
         self.service = service
+        self.selectedType = selectedType
         self.bind()
     }
     

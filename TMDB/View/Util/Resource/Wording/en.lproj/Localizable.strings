@@ -15,6 +15,7 @@
 "general.search.tvshow" = "Search TV Show...";
 "general.popular" = "Popular";
 "general.discover" = "Discover";
+"general.trending" = "Trending";
 "general.movies" = "Movies";
 "general.tvshows" = "TV Shows";
 "general.home" = "Home";

@@ -7,16 +7,29 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    @State public var selectedType: Int = 0
+struct HomeView<T>: View where T: HomeViewModelInterface {
+    @ObservedObject var viewModel: T
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 16) {
                 self.header
-                self.content
+                
+                VStack(spacing: 16) {
+                    BannerAutoScrollable(
+                        movies: $viewModel.nowPlayingItems,
+                        state: $viewModel.nowPlayingState
+                    )
+                    HorizontalSectionList(
+                        sectionTitle: viewModel.trendingTitle,
+                        movies: $viewModel.trendingItems,
+                        state: $viewModel.trendingState)
+                    HorizontalSectionList(
+                        sectionTitle: viewModel.discoverTitle,
+                        movies: $viewModel.discoverItems,
+                        state: $viewModel.discoverState)
+                }
             }
-            .background(Color.tBlack)
         }
         .navigationTitle("")
         .navigationBarHidden(true)
@@ -25,82 +38,22 @@ struct HomeView: View {
     private var header: some View {
         VStack {
             HomeHeader(searchDestination: {
-                SearchView(viewModel: SearchViewModel())
+                SearchView(
+                    viewModel: SearchViewModel(
+                        selectedType: self.viewModel.selectedType
+                    )
+                )
             }, moviesAction: {
-                self.selectedType = 0
+                self.viewModel.selectedType = 0
             }, tvShowsAction: {
-                self.selectedType = 1
-            }, selectedType: self.$selectedType)
+                self.viewModel.selectedType = 1
+            }, selectedType: self.$viewModel.selectedType)
         }
-    }
-    
-    private var content: AnyView {
-        if self.selectedType == 0 {
-            return AnyView(self.movies)
-        } else {
-            return AnyView(self.tvShows)
-        }
-    }
-    
-    private var movies: some View {
-        VStack(spacing: 16) {
-            self.bannerMovies
-            self.popularMovies
-            self.discoverMovies
-        }
-    }
-    
-    private var bannerMovies: some View {
-        BannerAutoScrollable(movies: [])
-    }
-    
-    private var popularMovies: some View {
-        HorizontalSectionList(
-            viewModel: HorizontalSectionListViewModel(
-                movies: []
-            ),
-            sectionTitle: Wording().str(.generalPopular))
-    }
-    
-    private var discoverMovies: some View {
-        HorizontalSectionList(
-            viewModel: HorizontalSectionListViewModel(
-                movies: []
-            ),
-            sectionTitle: Wording().str(.generalDiscover))
-    }
-    
-    private var tvShows: some View {
-        VStack(spacing: 16) {
-            self.bannerTvShows
-            self.popularTvShows
-            self.discoverTvShows
-        }
-    }
-    
-    private var bannerTvShows: some View {
-        BannerAutoScrollable(movies: [])
-    }
-    
-    private var popularTvShows: some View {
-        HorizontalSectionList(
-            viewModel: HorizontalSectionListViewModel(
-                movies: []
-            ),
-            sectionTitle: Wording().str(.generalPopular))
-    }
-    
-    private var discoverTvShows: some View {
-        HorizontalSectionList(
-            viewModel: HorizontalSectionListViewModel(
-                movies: []
-            ),
-            sectionTitle: Wording().str(.generalDiscover))
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(viewModel: HomeViewModel())
     }
 }

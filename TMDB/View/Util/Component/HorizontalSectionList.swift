@@ -8,22 +8,15 @@
 import SwiftUI
 
 struct HorizontalSectionList: View {
-    @ObservedObject var viewModel: HorizontalSectionListViewModel
-    private let sectionTitle: String
-    
-    init(
-        viewModel: HorizontalSectionListViewModel,
-        sectionTitle: String
-    ) {
-        self.viewModel = viewModel
-        self.sectionTitle = sectionTitle
-    }
-    
+    let sectionTitle: String
+    @Binding var movies: [MovieBase]
+    @Binding var state: APIServiceState
+        
     var body: some View {
-        if self.viewModel.state == .loading {
+        if self.state == .loading {
             self.shimmer
         } else {
-            if !self.viewModel.movies.isEmpty {
+            if !self.movies.isEmpty {
                 self.list
             } else {
                 self.empty
@@ -52,7 +45,7 @@ struct HorizontalSectionList: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(self.viewModel.movies, id: \.id) { movie in
+                    ForEach(self.movies, id: \.id) { movie in
                         PosterImage(
                             url: movie.posterURL,
                             title: movie.getTitle())
@@ -85,10 +78,9 @@ struct HorizontalSectionList_Previews: PreviewProvider {
                 .foregroundColor(.black)
             
             HorizontalSectionList(
-                viewModel: HorizontalSectionListViewModel(
-                    movies: []
-                ),
-                sectionTitle: Wording().str(.generalPopular))
+                sectionTitle: "",
+                movies: .constant([]),
+                state: .constant(.initial))
         }.preferredColorScheme(.dark)
     }
 }

@@ -26,7 +26,7 @@ final class SearchService {
     init(
         movieRequest: MoviesRequestDTO = .init(query: "One Piece", page: 1),
         tvShowRequest: TVShowRequestDTO = .init(query: "One Piece", page: 1),
-        transferService: DataTransferServiceInterface
+        transferService: DataTransferServiceInterface = DataTransferService()
     ) {
         self.movieRequest = movieRequest
         self.tvShowRequest = tvShowRequest
