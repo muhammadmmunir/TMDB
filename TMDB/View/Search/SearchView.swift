@@ -98,7 +98,12 @@ struct SearchView<T>: View where T: SearchViewModelInterface {
         using movie: MovieBase
     ) -> some View {
         return NavigationLink {
-            MovieDetailView()
+            MovieDetailView(
+                viewModel: MovieDetailViewModel(
+                    selectedType: self.viewModel.selectedType,
+                    movie: movie
+                )
+            )
         } label: {
             self.cell(using: movie)
         }

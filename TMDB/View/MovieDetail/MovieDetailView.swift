@@ -8,19 +8,15 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct MovieDetailView: View {
+struct MovieDetailView<T>: View where T: MovieDetailViewModelInterface {
     @State private var likeImage: String = "hand.thumbsup"
     @State private var dislikeImage: String = "hand.thumbsdown"
-    @State var isLiked: Bool? {
+    @State private var isLiked: Bool? {
         didSet {
             self.voted()
         }
     }
-    private let wording: Wording
-    
-    init(wording: Wording = .init()) {
-        self.wording = wording
-    }
+    @ObservedObject var viewModel: T
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -28,19 +24,29 @@ struct MovieDetailView: View {
                 self.poster
                 self.vote
                 self.detail
-                self.review
+                if self.viewModel.reviewsState == .loading {
+                    Shimmer()
+                        .frame(height: 70)
+                } else {
+                    self.review
+                }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("One Piece Film: Red")
+        .navigationTitle(viewModel.title)
         .toolbar {
             self.searchButton
+        }
+        .onAppear {
+            self.viewModel.loadReviews()
         }
     }
     
     private var searchButton: some View {
         NavigationLink(destination: {
-            SearchView(viewModel: SearchViewModel())
+            SearchView(
+                viewModel: SearchViewModel(selectedType: viewModel.selectedType)
+            )
         }) {
             Image(systemName: "magnifyingglass")
                 .resizable()
@@ -51,7 +57,7 @@ struct MovieDetailView: View {
     
     private var poster: some View {
         ZStack(alignment: .top) {
-            WebImage(url: URL(string: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"))
+            WebImage(url: self.viewModel.posterURL)
                 .resizable()
                 .placeholder {
                     self.posterPlaceholder
@@ -90,7 +96,7 @@ struct MovieDetailView: View {
     }
     
     private var posterPlaceholder: some View {
-        Text("placeholder")
+        Text(self.viewModel.title)
             .font(.tTitle2).bold()
             .multilineTextAlignment(.center)
             .foregroundColor(.tWhite)
@@ -130,8 +136,8 @@ struct MovieDetailView: View {
     
     private var vote: some View {
         HStack(alignment: .center) {
-            Text("1.200 votes")
-                .font(.tHeadline)
+            Text(self.viewModel.voteAverageFormatted())
+                .font(.tTitle).bold()
                 .foregroundColor(.tWhite)
             Spacer()
             HStack {
@@ -162,11 +168,11 @@ struct MovieDetailView: View {
     private var detail: some View {
         VStack(alignment: .leading, spacing: 32) {
             self.detailSection(
-                label: self.wording.str(.generalOverview),
-                value: "Detail overview Detail overview Detail overview Detail overview Detail overview Detail overview Detail overview Detail overview Detail overview")
+                label: self.viewModel.overviewLabel,
+                value: self.viewModel.overview)
             self.detailSection(
-                label: self.wording.str(.generalReleaseDate),
-                value: "10 Aug 2022")
+                label: self.viewModel.releaseDateLabel,
+                value: self.viewModel.releaseDateFormatted())
         }
         .padding(
             EdgeInsets(
@@ -196,73 +202,41 @@ struct MovieDetailView: View {
     private var review: some View {
         VStack(spacing: 16) {
             HStack {
-                Text(self.wording.str(.generalReview))
+                Text(self.viewModel.reviewLabel)
                     .font(.tTitle2).bold()
                     .foregroundColor(.tWhite)
                     .multilineTextAlignment(.leading)
                 Spacer()
             }
             
-            ZStack(alignment: .topLeading) {
-                Rectangle()
-                    .foregroundColor(.tWhite)
-                    .cornerRadius(8)
-
-                VStack(alignment: .leading) {
-                    HStack(spacing: 8) {
-                        WebImage(url: URL(string: "https://wallpaperaccess.com/full/5960274.jpg"))
-                            .resizable()
-                            .placeholder {
-                                Image(systemName: "person.circle")
-                                    .resizable()
-                                    .foregroundColor(.tDarkGray)
-                                    .frame(
-                                        width: 25,
-                                        height: 25
-                                    )
-                            }
-                            .indicator(.activity)
-                            .transition(.fade(duration: 0.25))
-                            .scaledToFill()
-                            .frame(
-                                width: 25,
-                                height: 25,
-                                alignment: .center
-                            )
-                            .clipShape(Circle())
-                        
-                        Text("Batman")
-                            .font(.tSubheadline)
-                            .foregroundColor(.tBlack)
-                            .lineLimit(1)
-                    }
-                    
-                    Text("\"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\"")
-                        .font(.tCaption)
-                        .foregroundColor(.tBlack)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(5)
-                }.padding(
-                    EdgeInsets(
-                        top: 8,
-                        leading: 8,
-                        bottom: 8,
-                        trailing: 8)
-                )
-            }
-            
-            HStack {
-                Spacer()
-                NavigationLink(destination: {
-                    AllReviewView()
-                }, label: {
-                    Text(self.wording.str(.generalSeeAllReview))
-                        .font(.tHeadline).bold()
+            if self.viewModel.review.isEmpty {
+                HStack {
+                    Text("NA")
+                        .font(.tTitle3)
                         .foregroundColor(.tWhite)
                         .multilineTextAlignment(.leading)
-                })
+                    Spacer()
+                }
+            } else {
+                BubbleReview(
+                    reviewerAvatar: self.viewModel.reviewerAvatar,
+                    reviewerName: self.viewModel.reviewerName,
+                    review: self.viewModel.review)
+                
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: {
+                        AllReviewView(
+                            viewModel: AllReviewViewModel(reviews: self.viewModel.reviews)
+                        )
+                    }, label: {
+                        Text(self.viewModel.seeAllReviewsLabel)
+                            .font(.tHeadline).bold()
+                            .foregroundColor(.tWhite)
+                            .multilineTextAlignment(.leading)
+                    })
+                }
             }
-            
         }.padding(
             EdgeInsets(
                 top: 16,
@@ -277,7 +251,7 @@ struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ZStack {
-                MovieDetailView()
+                MovieDetailView(viewModel: MovieDetailViewModel())
             }
             .preferredColorScheme(.dark)
         }

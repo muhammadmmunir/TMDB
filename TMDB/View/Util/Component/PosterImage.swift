@@ -12,17 +12,17 @@ struct PosterImage: View {
     static let width: CGFloat = 130
     static let height: CGFloat = 200
     
-    let url: URL?
-    let title: String
-    
-    init(url: URL?, title: String) {
-        self.url = url
-        self.title = title
-    }
+    let selectedType: Int
+    let movie: MovieBase
     
     var body: some View {
         NavigationLink(destination: {
-            MovieDetailView()
+            MovieDetailView(
+                viewModel: MovieDetailViewModel(
+                    selectedType: selectedType,
+                    movie: movie
+                )
+            )
         }, label: {
             self.poster
         })
@@ -30,7 +30,7 @@ struct PosterImage: View {
     
     private var poster: some View {
         Group {
-            if self.url != nil {
+            if self.movie.posterURL != nil {
                 self.posterImage
             } else {
                 self.posterPlaceholder
@@ -44,7 +44,7 @@ struct PosterImage: View {
     }
     
     private var posterImage: some View {
-        WebImage(url: self.url)
+        WebImage(url: self.movie.posterURL)
             .resizable()
             .placeholder {
                 self.posterPlaceholder
@@ -55,7 +55,7 @@ struct PosterImage: View {
     }
     
     private var posterPlaceholder: some View {
-        Text(self.title)
+        Text(self.movie.getTitle())
             .font(.tTitle2).bold()
             .multilineTextAlignment(.center)
             .foregroundColor(.tWhite)
@@ -66,8 +66,8 @@ struct PosterImage: View {
 struct PosterImage_Previews: PreviewProvider {
     static var previews: some View {
         PosterImage(
-            url: .init(string: "https://assets.promediateknologi.com/crop/0x0:0x0/x/photo/2022/07/11/1356301783.jpg"),
-            title: "One Piece Film: Red"
+            selectedType: 0,
+            movie: .init()
         )
     }
 }

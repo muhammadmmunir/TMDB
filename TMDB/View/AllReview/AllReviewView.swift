@@ -8,23 +8,33 @@
 import SwiftUI
 
 struct AllReviewView: View {
-    private let wording: Wording
-    
-    init(wording: Wording = .init()) {
-        self.wording = wording
-    }
+    let viewModel: AllReviewViewModelInterface
     
     var body: some View {
-        VStack {
-            Text("Review")
+        ScrollView(.vertical, showsIndicators: true) {
+            VStack(alignment: .leading, spacing: 10) {
+                ForEach(self.viewModel.reviews) { review in
+                    BubbleReview(
+                        reviewerAvatar: review.avatarURL,
+                        reviewerName: review.name ?? "",
+                        review: review.content ?? "")
+                }
+            }
+            .padding(
+                EdgeInsets(
+                    top: 16,
+                    leading: 16,
+                    bottom: 16,
+                    trailing: 16)
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(self.viewModel.title)
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(self.wording.str(.generalAllReview))
     }
 }
 
 struct AllReviewView_Previews: PreviewProvider {
     static var previews: some View {
-        AllReviewView()
+        AllReviewView(viewModel: AllReviewViewModel())
     }
 }

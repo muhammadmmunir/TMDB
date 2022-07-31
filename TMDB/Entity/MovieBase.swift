@@ -14,6 +14,10 @@ public class MovieBase: Identifiable {
     public var overview: String?
     public var voteAverage: Double?
     
+    init() {
+        self.id = 0
+    }
+    
     init(
         id: Int,
         posterPath: String?,

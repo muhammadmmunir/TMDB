@@ -12,12 +12,17 @@ struct Banner: View {
     static let width: CGFloat = .infinity
     static let height: CGFloat = 250
     
-    let url: URL?
-    let title: String
+    let selectedType: Int
+    let movie: MovieBase
     
     var body: some View {
         NavigationLink(destination: {
-            MovieDetailView()
+            MovieDetailView(
+                viewModel: MovieDetailViewModel(
+                    selectedType: selectedType,
+                    movie: movie
+                )
+            )
         }, label: {
             self.banner
         })
@@ -25,7 +30,7 @@ struct Banner: View {
     
     private var banner: some View {
         Group {
-            if self.url != nil {
+            if self.movie.backdropURL != nil {
                 self.bannerImage
             } else {
                 self.bannerPlaceholder
@@ -40,7 +45,7 @@ struct Banner: View {
     private var bannerImage: some View {
         ZStack(alignment: .top) {
             GeometryReader { geo in
-                WebImage(url: self.url)
+                WebImage(url: self.movie.backdropURL)
                     .resizable()
                     .placeholder {
                         self.bannerPlaceholder
@@ -59,7 +64,7 @@ struct Banner: View {
     }
     
     private var bannerPlaceholder: some View {
-        Text(self.title)
+        Text(self.movie.getTitle())
             .font(.tTitle2).bold()
             .multilineTextAlignment(.center)
             .foregroundColor(.tWhite)
@@ -93,7 +98,7 @@ struct Banner: View {
                             endPoint: .bottom)
                     )
                 
-                Text(self.title)
+                Text(self.movie.getTitle())
                     .font(.tSubheadline).bold()
                     .foregroundColor(.tWhite)
                     .multilineTextAlignment(.center)
@@ -109,7 +114,8 @@ struct Banner: View {
 struct Banner_Previews: PreviewProvider {
     static var previews: some View {
         Banner(
-            url: .init(string: "https://www.joblo.com/wp-content/uploads/2014/10/interstellar-quad-nolan-1.jpg"),
-            title: "Interstellar")
+            selectedType: 0,
+            movie: .init()
+        )
     }
 }

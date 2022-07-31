@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct MainView: View {
-    @State public var selectedTab: Int = 0
+struct MainView<T>: View where T: MainViewModelInterface {
+    @ObservedObject var viewModel: T
     
     var body: some View {
         NavigationView {
-            TabView(selection: $selectedTab) {
+            TabView(selection: $viewModel.selectedTab) {
                 ZStack { HomeView(viewModel: HomeViewModel()) }
                 .tabItem { Image(systemName: "house") }
                 .tag(0)
@@ -30,6 +30,6 @@ struct MainView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(viewModel: MainViewModel())
     }
 }

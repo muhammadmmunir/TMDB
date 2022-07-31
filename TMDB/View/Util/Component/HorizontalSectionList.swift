@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HorizontalSectionList: View {
     let sectionTitle: String
+    let selectedType: Int
     @Binding var movies: [MovieBase]
     @Binding var state: APIServiceState
         
@@ -47,8 +48,9 @@ struct HorizontalSectionList: View {
                 HStack(spacing: 16) {
                     ForEach(self.movies, id: \.id) { movie in
                         PosterImage(
-                            url: movie.posterURL,
-                            title: movie.getTitle())
+                            selectedType: selectedType,
+                            movie: movie
+                        )
                     }
                 }
                 .frame(height: PosterImage.height)
@@ -79,6 +81,7 @@ struct HorizontalSectionList_Previews: PreviewProvider {
             
             HorizontalSectionList(
                 sectionTitle: "",
+                selectedType: 0,
                 movies: .constant([]),
                 state: .constant(.initial))
         }.preferredColorScheme(.dark)

@@ -17,15 +17,18 @@ struct HomeView<T>: View where T: HomeViewModelInterface {
                 
                 VStack(spacing: 16) {
                     BannerAutoScrollable(
+                        selectedType: self.viewModel.selectedType,
                         movies: $viewModel.nowPlayingItems,
                         state: $viewModel.nowPlayingState
                     )
                     HorizontalSectionList(
                         sectionTitle: viewModel.trendingTitle,
+                        selectedType: viewModel.selectedType,
                         movies: $viewModel.trendingItems,
                         state: $viewModel.trendingState)
                     HorizontalSectionList(
                         sectionTitle: viewModel.discoverTitle,
+                        selectedType: viewModel.selectedType,
                         movies: $viewModel.discoverItems,
                         state: $viewModel.discoverState)
                 }

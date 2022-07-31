@@ -13,6 +13,7 @@ struct BannerAutoScrollable: View {
         .autoconnect()
     @State private var currentIndex = 0
     
+    let selectedType: Int
     @Binding var movies: [MovieBase]
     @Binding var state: APIServiceState
     
@@ -24,8 +25,9 @@ struct BannerAutoScrollable: View {
                 TabView(selection: $currentIndex) {
                     ForEach(self.movies, id: \.id) { movie in
                         Banner(
-                            url: movie.backdropURL,
-                            title: movie.getTitle())
+                            selectedType: selectedType,
+                            movie: movie
+                        )
                     }
                 }
             }
@@ -47,6 +49,7 @@ struct BannerAutoScrollable: View {
 struct BannerAutoScrollable_Previews: PreviewProvider {
     static var previews: some View {
         BannerAutoScrollable(
+            selectedType: 0,
             movies: .constant([]),
             state: .constant(.initial)
         )

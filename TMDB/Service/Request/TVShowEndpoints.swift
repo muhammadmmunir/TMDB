@@ -19,7 +19,7 @@ struct TVShowEndpoints {
         )
     }
     
-    static func getMovieReviews(
+    static func getTVShowReviews(
         with request: ReviewRequestDTO,
         and tvId: Int
     ) -> APIEndpoint<ReviewResponseDTO> {

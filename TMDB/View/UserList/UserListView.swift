@@ -26,7 +26,7 @@ struct UserListView: View {
                     Spacer()
                         .frame(height: 100)
                     NavigationLink {
-                        MainView()
+                        MainView(viewModel: MainViewModel())
                     } label: {
                         VStack(spacing: 10) {
                             Image("batman")
