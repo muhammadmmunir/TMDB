@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import UIKit
 
 struct MovieDetailView<T>: View where T: MovieDetailViewModelInterface {
     @State private var likeImage: String = "hand.thumbsup"
@@ -17,6 +17,9 @@ struct MovieDetailView<T>: View where T: MovieDetailViewModelInterface {
         }
     }
     @ObservedObject var viewModel: T
+    
+    private let backdropWidth: CGFloat = UIScreen.main.bounds.size.width
+    private let backdropHeight: CGFloat = 250
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -37,9 +40,6 @@ struct MovieDetailView<T>: View where T: MovieDetailViewModelInterface {
         .toolbar {
             self.searchButton
         }
-        .onAppear {
-            self.viewModel.loadReviews()
-        }
     }
     
     private var searchButton: some View {
@@ -57,16 +57,23 @@ struct MovieDetailView<T>: View where T: MovieDetailViewModelInterface {
     
     private var poster: some View {
         ZStack(alignment: .top) {
-            WebImage(url: self.viewModel.posterURL)
-                .resizable()
-                .placeholder {
-                    self.posterPlaceholder
+            WebImage(
+                url: self.viewModel.backdropURL,
+                config: {
+                    AnyView(
+                        AnyView($0.resizable())
+                            .scaledToFill()
+                            .frame(
+                                width: self.backdropWidth,
+                                height: self.backdropHeight)
+                    )
+                },
+                placeholder: {
+                    AnyView(
+                        AnyView(self.posterPlaceholder)
+                    )
                 }
-                .indicator(.activity)
-                .transition(.fade(duration: 0.25))
-                .scaledToFill()
-                .frame(maxWidth: .infinity, maxHeight: 300)
-                .clipShape(Rectangle())
+            )
             
             Rectangle()
                 .fill(
@@ -90,8 +97,7 @@ struct MovieDetailView<T>: View where T: MovieDetailViewModelInterface {
                         endPoint: .bottom)
                 )
                 .frame(height: 50)
-                .offset(x: 0, y: 250)
-            
+                .offset(x: 0, y: 200)
         }
     }
     
@@ -100,7 +106,7 @@ struct MovieDetailView<T>: View where T: MovieDetailViewModelInterface {
             .font(.tTitle2).bold()
             .multilineTextAlignment(.center)
             .foregroundColor(.tWhite)
-            .frame(maxWidth: .infinity)
+            .frame(width: self.backdropWidth, height: self.backdropHeight)
     }
     
     private func likeButton() {
@@ -251,7 +257,11 @@ struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ZStack {
-                MovieDetailView(viewModel: MovieDetailViewModel())
+                MovieDetailView(
+                    viewModel: MovieDetailViewModel(
+                        movie: Movie(id: 1, posterPath: "", backdropPath: "/393mh1AJ0GYWVD7Hsq5KkFaTAoT.jpg", overview: "overview", voteAverage: 7, title: "title", releaseDate: "")
+                    )
+                )
             }
             .preferredColorScheme(.dark)
         }

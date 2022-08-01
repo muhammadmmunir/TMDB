@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct PosterImage: View {
     static let width: CGFloat = 130
@@ -44,14 +43,20 @@ struct PosterImage: View {
     }
     
     private var posterImage: some View {
-        WebImage(url: self.movie.posterURL)
-            .resizable()
-            .placeholder {
-                self.posterPlaceholder
+        WebImage(
+            url: self.movie.posterURL,
+            config: {
+                AnyView(
+                    AnyView($0.resizable())
+                        .scaledToFill()
+                )
+            },
+            placeholder: {
+                AnyView(
+                    AnyView(self.posterPlaceholder)
+                )
             }
-            .indicator(.activity)
-            .transition(.fade(duration: 0.25))
-            .scaledToFill()
+        )
     }
     
     private var posterPlaceholder: some View {

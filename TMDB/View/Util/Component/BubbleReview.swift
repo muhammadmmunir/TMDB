@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct BubbleReview: View {
     let reviewerAvatar: URL?
@@ -21,26 +20,34 @@ struct BubbleReview: View {
 
             VStack(alignment: .leading) {
                 HStack(spacing: 8) {
-                    WebImage(url: reviewerAvatar)
-                        .resizable()
-                        .placeholder {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .foregroundColor(.tDarkGray)
-                                .frame(
-                                    width: 25,
-                                    height: 25
+                    WebImage(
+                        url: reviewerAvatar,
+                        config: {
+                            AnyView(
+                                AnyView($0.resizable())
+                                    .scaledToFill()
+                                    .frame(
+                                        width: 25,
+                                        height: 25,
+                                        alignment: .center
+                                    )
+                                    .clipShape(Circle())
+                            )
+                        },
+                        placeholder: {
+                            AnyView(
+                                AnyView(
+                                    Image(systemName: "person.circle")
+                                        .resizable()
+                                        .foregroundColor(.tDarkGray)
+                                        .frame(
+                                            width: 25,
+                                            height: 25
+                                        )
                                 )
+                            )
                         }
-                        .indicator(.activity)
-                        .transition(.fade(duration: 0.25))
-                        .scaledToFill()
-                        .frame(
-                            width: 25,
-                            height: 25,
-                            alignment: .center
-                        )
-                        .clipShape(Circle())
+                    )
                     
                     Text(reviewerName)
                         .font(.tSubheadline)

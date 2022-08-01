@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct Banner: View {
     static let width: CGFloat = .infinity
@@ -45,18 +44,23 @@ struct Banner: View {
     private var bannerImage: some View {
         ZStack(alignment: .top) {
             GeometryReader { geo in
-                WebImage(url: self.movie.backdropURL)
-                    .resizable()
-                    .placeholder {
-                        self.bannerPlaceholder
+                WebImage(
+                    url: self.movie.backdropURL,
+                    config: {
+                        AnyView(
+                            AnyView($0.resizable())
+                                .scaledToFill()
+                                .frame(
+                                    width: geo.size.width,
+                                    height: Banner.height)
+                        )
+                    },
+                    placeholder: {
+                        AnyView(
+                            AnyView(self.bannerPlaceholder)
+                        )
                     }
-                    .indicator(.activity)
-                    .transition(.fade(duration: 0.25))
-                    .scaledToFill()
-                    .frame(
-                        width: geo.size.width,
-                        height: Banner.height)
-                    .clipShape(Rectangle())
+                )
             }
             
             self.bannerTitle

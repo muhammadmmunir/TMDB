@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct SearchView<T>: View where T: SearchViewModelInterface {
     private let cellWidth: CGFloat = 100
@@ -140,15 +139,22 @@ struct SearchView<T>: View where T: SearchViewModelInterface {
         title: String,
         url: URL?
     ) -> some View {
-        return WebImage(url: url)
-            .resizable()
-            .placeholder {
-                self.posterPlaceholder(
-                    using: title)
+        return WebImage(
+            url: url,
+            config: {
+                AnyView(
+                    AnyView($0.resizable())
+                        .scaledToFill()
+                )
+            },
+            placeholder: {
+                AnyView(
+                    AnyView(
+                        self.posterPlaceholder(using: title)
+                    )
+                )
             }
-            .indicator(.activity)
-            .transition(.fade(duration: 0.25))
-            .scaledToFill()
+        )
     }
     
     private func posterPlaceholder(

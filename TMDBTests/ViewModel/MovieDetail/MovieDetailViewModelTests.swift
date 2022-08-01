@@ -60,6 +60,7 @@ final class MovieDetailViewModelTests: XCTestCase {
         
         XCTAssertEqual(self.sut.title, self.defaultMovie.title)
         XCTAssertEqual(self.sut.posterURL, self.defaultMovie.posterURL)
+        XCTAssertEqual(self.sut.backdropURL, self.defaultMovie.backdropURL)
         XCTAssertEqual(self.sut.overviewLabel, self.wording.str(.generalOverview))
         XCTAssertEqual(self.sut.overview, self.defaultMovie.overview)
         XCTAssertEqual(self.sut.releaseDateLabel, self.wording.str(.generalReleaseDate))
@@ -77,6 +78,7 @@ final class MovieDetailViewModelTests: XCTestCase {
         
         XCTAssertEqual(self.sut.title, self.defaultTVShow.name)
         XCTAssertEqual(self.sut.posterURL, self.defaultTVShow.posterURL)
+        XCTAssertEqual(self.sut.backdropURL, self.defaultTVShow.backdropURL)
         XCTAssertEqual(self.sut.overviewLabel, self.wording.str(.generalOverview))
         XCTAssertEqual(self.sut.overview, self.defaultTVShow.overview)
         XCTAssertEqual(self.sut.releaseDateLabel, self.wording.str(.generalReleaseDate))

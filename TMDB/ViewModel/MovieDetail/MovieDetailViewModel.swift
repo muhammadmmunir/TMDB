@@ -14,6 +14,7 @@ protocol MovieDetailViewModelInterface: ObservableObject {
     var selectedType: Int { get set }
     var title: String { get }
     var posterURL: URL? { get }
+    var backdropURL: URL? { get }
     var overviewLabel: String { get }
     var overview: String { get }
     var releaseDateLabel: String { get }
@@ -40,6 +41,9 @@ final class MovieDetailViewModel: MovieDetailViewModelInterface {
     }
     var posterURL: URL? {
         self.movie.posterURL
+    }
+    var backdropURL: URL? {
+        self.movie.backdropURL
     }
     var overviewLabel: String {
         self.wording.str(.generalOverview)
@@ -87,6 +91,7 @@ final class MovieDetailViewModel: MovieDetailViewModelInterface {
         self.wording = wording
         self.dateFormatter = dateFormatter
         self.service = service
+        self.loadReviews()
     }
     
     func loadReviews() {

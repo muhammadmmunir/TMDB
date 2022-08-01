@@ -6,6 +6,3 @@ iOS Project implemented with MVVM Architecture and SwiftUI using The Movie Datab
 2. Search: searching movies and tv shows based on input query
 3. Detail: showing detail of movie or tv show
 4. All Review: showing reviews of certain movies or tv shows
-
-### Dependencies
-1. SDWebImageSwiftUI
